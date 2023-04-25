@@ -13,6 +13,11 @@ const SecondPage = () => {
     const [yourAge, setYourAge] = useState(localStorage.getItem('age'))
     const [yourEducation, setYourEducation] = useState(localStorage.getItem('EducationType'))
 
+    const handleAddData = () => {
+        context.functionName(false)
+        localStorage.showNextPage = false
+    }
+
     const handleEditInfo = () => {
         context.functionName(false)
         localStorage.showNextPage = false
@@ -58,6 +63,8 @@ const SecondPage = () => {
         <Button onClick={handleEditInfo} variant="contained">Edit information</Button>
         <br /> <br />
         <Button onClick={handleDeleteInfo} variant="contained">Delete information</Button>
+        <br /> <br />
+        <Button onClick={handleAddData} variant="contained">Add Data</Button>
         </>
     )
 }

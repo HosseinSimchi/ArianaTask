@@ -9,7 +9,6 @@ import myContext from './context/context';
 const App = () => {
 
 
-  // const [showNextPage, setShowNextPage] = useState(false)
   const [show, setShow] = useState(localStorage.getItem('showNextPage'))
   
   return (
