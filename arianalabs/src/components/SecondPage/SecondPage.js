@@ -1,41 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {Table,Button, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
+import { Link } from 'react-router-dom';
 
-import { useContext } from 'react';
-import myContext from '../../context/context';
+
 
 const SecondPage = () => {
-    const context = useContext(myContext)
-
-    const [yourName, setYourName] = useState(localStorage.getItem('name'))
-    const [yourFamily, setYourFamily] = useState(localStorage.getItem('family'))
-    const [yourAge, setYourAge] = useState(localStorage.getItem('age'))
-    const [yourEducation, setYourEducation] = useState(localStorage.getItem('EducationType'))
-
-    const handleAddData = () => {
-        context.functionName(false)
-        localStorage.showNextPage = false
+    
+    const data = JSON.parse(localStorage.getItem('InfoData'))
+    const addNewData = () => {
+        localStorage.name = ""
+        localStorage.family = ""
+        localStorage.value = ""
+        localStorage.educationType = ""
     }
 
-    const handleEditInfo = () => {
-        context.functionName(false)
-        localStorage.showNextPage = false
-        localStorage.name = yourName;
-        localStorage.family = yourFamily;
-        localStorage.age = yourAge;
-        localStorage.EducationType = yourEducation;
-    }
+    const editHandler = (index) => {
+        localStorage.name = data[index][0]
+        localStorage.family = data[index][1]
+        localStorage.age = data[index][2]
+        localStorage.educationType = data[index][3]
 
-    const handleDeleteInfo = () => {
-        localStorage.name = '';
-        localStorage.family = '';
-        localStorage.age = '';
-        localStorage.EducationType = '';
-        setYourName(localStorage.getItem('name'))
-        setYourFamily(localStorage.getItem('family'))
-        setYourAge(localStorage.getItem('age'))
-        setYourEducation(localStorage.getItem('EducationType'))
     }
     return (
         <>
@@ -47,24 +32,37 @@ const SecondPage = () => {
                     <TableCell align="right">Family</TableCell>
                     <TableCell align="right">Age</TableCell>
                     <TableCell align="right">Education Type</TableCell>
+                    <TableCell align="right">Edit Info</TableCell>
+                    <TableCell align="right">Delete Info</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                    <TableRow>
-                    <TableCell component="th" scope="row">{yourName}</TableCell>
-                    <TableCell component="th" align="right" scope="row">{yourFamily}</TableCell>
-                    <TableCell component="th" align="right" scope="row">{yourAge}</TableCell>
-                    <TableCell component="th" align="right" scope="row">{yourEducation}</TableCell>
-                    </TableRow>
+                    <>
+                    {data.map((item, index) => {
+                        console.log(index);
+                        return (<>
+                            <TableRow>
+                                <TableCell component="th" scope="row">{item[0]}</TableCell>
+                                <TableCell component="th" align="right" scope="row">{item[1]}</TableCell>
+                                <TableCell component="th" align="right" scope="row">{item[2]}</TableCell>
+                                <TableCell component="th" align="right" scope="row">{item[3]}</TableCell>
+                                <TableCell component="th" align="right" scope="row">
+                                    <Link to="/">
+                                        <Button onClick={editHandler(index)}>Edit</Button>
+                                    </Link>
+                                </TableCell>
+                                <TableCell component="th" align="right" scope="row"><Button>Delete</Button></TableCell>
+                            </TableRow>
+                        </>)
+                    })}
+                    </>
                 </TableBody>
             </Table>
         </TableContainer>
         <br /> <br />
-        <Button onClick={handleEditInfo} variant="contained">Edit information</Button>
-        <br /> <br />
-        <Button onClick={handleDeleteInfo} variant="contained">Delete information</Button>
-        <br /> <br />
-        <Button onClick={handleAddData} variant="contained">Add Data</Button>
+        <Link to='/'>
+        <Button onClick={addNewData} variant="contained">Add Data</Button>
+        </Link>
         </>
     )
 }
