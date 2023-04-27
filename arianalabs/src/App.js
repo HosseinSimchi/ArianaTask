@@ -42,16 +42,6 @@ const App = () => {
         setFamily(event.target.value)
     }
 
-    const editHandler = () => {
-        let IndexNewData;
-        info.forEach((item, index) => {
-            if (item[0] === localStorage.getItem('name')){
-              IndexNewData = index;
-            }
-        })
-        info[IndexNewData] = [name,family,value,educationType]
-        localStorage.InfoData = JSON.stringify(info)
-    }
 
     const submitHandler = () => {
         localStorage.setItem('name', name)
@@ -101,10 +91,6 @@ const App = () => {
                         <br /><br /><br />
                         <Link to="/secondpage">
                         <Button onClick={submitHandler} variant="contained">Submit</Button>
-                        </Link>
-                        <br /><br /><br />
-                        <Link to="/secondpage">
-                        <Button onClick={editHandler} variant="contained">Edit</Button>
                         </Link>
                         <br /><br /><br />
                     </Box>
